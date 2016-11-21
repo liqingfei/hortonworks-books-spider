@@ -45,9 +45,12 @@ class Downloader:
                 return href
             
         for item in content:
-            href = item.find('a').find_next('a')['href']
-            name = extract_name(href)
-            yield (name, BASE_URL + extract_href(href))
+            if item:
+                link = item.find('a', class_="pdf-link")
+                if link:
+                    href = link['href']
+                    name = extract_name(href)
+                    yield (name, BASE_URL + extract_href(href))
                     
         
     def download(self, item): 
